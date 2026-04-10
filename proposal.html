@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Someone Special ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('pexels-introspectivedsgn-5895397.jpg') no-repeat center/cover;
+}
+
+/* Container */
+.container {
+    text-align: center;
+    background: rgba(0,0,0,0.5);
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    animation: fadeIn 2s ease;
+}
+
+/* Glowing Name */
+.glow {
+    color: pink;
+    animation: glow 1.5s infinite alternate;
+}
+
+/* Buttons */
+button {
+    padding: 12px 25px;
+    font-size: 18px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.yes {
+    background: linear-gradient(45deg, #ff4b91, #ff85a2);
+    color: white;
+}
+
+.no {
+    background: #ddd;
+    color: black;
+}
+
+button:hover {
+    transform: scale(1.15);
+}
+
+/* Emoji + message */
+#emoji {
+    font-size: 60px;
+    margin-top: 10px;
+}
+
+#message {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+/* Final */
+#final {
+    display: none;
+    text-align: center;
+}
+
+#final img {
+    width: 260px;
+    border-radius: 15px;
+    margin-top: 20px;
+    box-shadow: 0 0 25px pink;
+}
+
+/* Countdown */
+#countdown {
+    font-size: 50px;
+    margin-top: 20px;
+}
+
+/* Hearts */
+.heart {
+    position: absolute;
+    color: pink;
+    animation: floatUp 5s linear infinite;
+}
+
+/* Animations */
+@keyframes floatUp {
+    0% {transform: translateY(100vh); opacity: 1;}
+    100% {transform: translateY(-10vh); opacity: 0;}
+}
+
+@keyframes glow {
+    from {text-shadow: 0 0 10px pink;}
+    to {text-shadow: 0 0 30px red;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="music" autoplay loop>
+    <source src="Christina Perri - A Thousand Years.mp3" type="audio/mp3">
+</audio>
+
+<div class="container" id="main">
+    <h1>Hey <span class="glow">[PUNNO]</span> ❤️</h1>
+    <h2>Will you stay with me forever?</h2>
+
+    <button class="yes" onclick="yesClicked()">Yes 💖</button>
+    <button class="no" onclick="noClicked()">No 😅</button>
+
+    <div id="emoji"></div>
+    <div id="message"></div>
+</div>
+
+<!-- COUNTDOWN -->
+<div id="countdown" style="display:none;">3</div>
+
+<!-- FINAL -->
+<div id="final">
+    <h1 class="glow">You are my everything 💖</h1>
+    <p id="typing"></p>
+    <img src="Screenshot_1.jpg">
+</div>
+
+<script>
+let noCount = 0;
+
+function noClicked() {
+    noCount++;
+    let emoji = document.getElementById("emoji");
+    let message = document.getElementById("message");
+    let noBtn = document.querySelector(".no");
+
+    if (noCount === 1) {
+        emoji.innerHTML = "😢";
+        message.innerHTML = "No? That hurts... 💔";
+    } 
+    else if (noCount === 2) {
+        emoji.innerHTML = "😭";
+        message.innerHTML = "Please... you mean everything to me 🥺";
+    } 
+    else if (noCount === 3) {
+        emoji.innerHTML = "😡";
+        message.innerHTML = "NO is not an option 😤 press YES!";
+        noBtn.style.display = "none";
+    }
+}
+
+function yesClicked() {
+    document.getElementById("main").style.display = "none";
+    document.getElementById("countdown").style.display = "block";
+
+    let count = 3;
+    let interval = setInterval(() => {
+        count--;
+        document.getElementById("countdown").innerHTML = count;
+
+        if (count === 0) {
+            clearInterval(interval);
+            document.getElementById("countdown").style.display = "none";
+            showFinal();
+        }
+    }, 1000);
+}
+
+function showFinal() {
+    document.getElementById("final").style.display = "block";
+    startTyping();
+    startHearts();
+}
+
+/* Typing */
+let text = "From the day I met you, my life changed completely. You are my happiness, my peace, my forever. I promise to love you endlessly ❤️";
+let i = 0;
+
+function startTyping() {
+    function type() {
+        if (i < text.length) {
+            document.getElementById("typing").innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, 40);
+        }
+    }
+    type();
+}
+
+/* Hearts */
+function startHearts() {
+    setInterval(() => {
+        let heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random()*100 + "vw";
+        heart.style.fontSize = (20 + Math.random()*20) + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 5000);
+    }, 300);
+}
+</script>
+
+</body>
+</html>
